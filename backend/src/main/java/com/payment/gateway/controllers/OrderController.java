@@ -80,16 +80,18 @@ public ResponseEntity<?> getOrderPublic(@PathVariable String orderId) {
                 notes
         );
 
-        return ResponseEntity.status(201).body(Map.of(
-                "id", order.getId(),
-                "merchant_id", order.getMerchantId(),
-                "amount", order.getAmount(),
-                "currency", order.getCurrency(),
-                "receipt", order.getReceipt(),
-                "notes", notes,
-                "status", order.getStatus(),
-                "created_at", order.getCreatedAt().toString()
-        ));
+        Map<String, Object> response = new java.util.HashMap<>();
+        response.put("id", order.getId());
+        response.put("merchant_id", order.getMerchantId());
+        response.put("amount", order.getAmount());
+        response.put("currency", order.getCurrency());
+        response.put("receipt", order.getReceipt());
+        response.put("notes", notes == null ? Map.of() : request.get("notes"));
+        response.put("status", order.getStatus());
+        response.put("created_at", order.getCreatedAt().toString());
+
+        return ResponseEntity.status(201).body(response);
+
     }
 
     // =========================================================

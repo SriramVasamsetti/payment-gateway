@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Merchant {
 
     @Id
-    @GeneratedValue
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @Column(nullable = false, length = 255)

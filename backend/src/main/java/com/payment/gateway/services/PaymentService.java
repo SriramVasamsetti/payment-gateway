@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Random;
+
 
 @Service
 public class PaymentService {
@@ -102,6 +104,11 @@ public class PaymentService {
 
         payment.setUpdatedAt(Instant.now());
         return paymentRepository.save(payment);
+    }
+
+    // ---------------- LIST PAYMENTS (NEW – REQUIRED) ----------------
+    public List<Payment> getPaymentsByMerchant(String merchantId) {
+        return paymentRepository.findByMerchantId(merchantId);
     }
 
     // ---------------- PROCESSING LOGIC ----------------

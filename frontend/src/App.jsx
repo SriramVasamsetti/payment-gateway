@@ -1,13 +1,17 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Transactions from "./pages/Transactions";
+
 export default function App() {
   return (
-    <div style={{ padding: '40px', textAlign: 'center', fontFamily: 'Arial' }}>
-      <h1>Payment Gateway Dashboard</h1>
-      <p>Dashboard UI coming soon...</p>
-      <div style={{ marginTop: '20px', fontSize: '14px', color: '#666' }}>
-        <p>✅ API: http://localhost:8000</p>
-        <p>✅ Database: Connected</p>
-        <p>✅ Server: Running on port 3000</p>
-      </div>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/transactions" element={<Transactions />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }

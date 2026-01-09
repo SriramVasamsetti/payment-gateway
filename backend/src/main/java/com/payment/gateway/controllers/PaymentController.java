@@ -97,6 +97,7 @@ public class PaymentController {
             return ResponseEntity.badRequest().body(error(code, errorMessage(code)));
         }
     }
+    
 
     // =========================================================
     // AUTH PAYMENT (MERCHANT)
@@ -256,4 +257,28 @@ public class PaymentController {
             default -> "Payment processing failed";
         };
     }
+    @GetMapping
+public ResponseEntity<?> listPayments(
+        @RequestHeader("X-Api-Key") String apiKey,
+        @RequestHeader("X-Api-Secret") String apiSecret
+) {
+    Merchant merchant;
+    try {
+        merchant = authService.authenticate(apiKey, apiSecret);
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(401).body(Map.of(
+                "error", Map.of(
+                        "code", "AUTHENTICATION_ERROR",
+                        "description", "Invalid API credentials"
+                )
+        ));
+    }
+
+    return ResponseEntity.ok(
+            paymentService.getPaymentsByMerchant(
+                    merchant.getId().toString()
+            )
+    );
+}
+
 }
